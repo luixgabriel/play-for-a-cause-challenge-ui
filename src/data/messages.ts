@@ -43,36 +43,36 @@ const messages: IMessage[] = [
     content: 'O Vasco não cai!',
     createdAt: '25/08/2053',
   },
-  {
-    id: '5',
-    senderId: '1',
-    content: 'O Vasco não cai!',
-    createdAt: '25/08/2053',
-  },
-  {
-    id: '5',
-    senderId: '2',
-    content: 'O Vasco não cai!',
-    createdAt: '25/08/2053',
-  },
-  {
-    id: '5',
-    senderId: '2',
-    content: 'O Vasco não cai!',
-    createdAt: '25/08/2053',
-  },
-  {
-    id: '5',
-    senderId: '1',
-    content: 'O Vasco não cai!',
-    createdAt: '25/08/2053',
-  },
-  {
-    id: '5',
-    senderId: '2',
-    content: 'O Vasco não cai!',
-    createdAt: '25/08/2053',
-  },
+  // {
+  //   id: '5',
+  //   senderId: '1',
+  //   content: 'O Vasco não cai!',
+  //   createdAt: '25/08/2053',
+  // },
+  // {
+  //   id: '5',
+  //   senderId: '2',
+  //   content: 'O Vasco não cai!',
+  //   createdAt: '25/08/2053',
+  // },
+  // {
+  //   id: '5',
+  //   senderId: '2',
+  //   content: 'O Vasco não cai!',
+  //   createdAt: '25/08/2053',
+  // },
+  // {
+  //   id: '5',
+  //   senderId: '1',
+  //   content: 'O Vasco não cai!',
+  //   createdAt: '25/08/2053',
+  // },
+  // {
+  //   id: '5',
+  //   senderId: '2',
+  //   content: 'O Vasco não cai!',
+  //   createdAt: '25/08/2053',
+  // },
 ]
 
 export default messages
