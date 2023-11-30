@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import users from '../../data/users'
-import { MessagesSquare, SendHorizonal } from 'lucide-react'
+import messages from '../../data/messages'
+import ChatBox from './chatbox'
 
 const ContainerChat = () => {
   return (
@@ -40,23 +41,7 @@ const ContainerChat = () => {
             ))}
           </div>
         </div>
-        <div className="w-[68%] flex flex-col place-content-between">
-          <div className="bg-neutral-800 bg-opacity-10 w-full flex justify-center items-center p-3 gap-4">
-            {' '}
-            <MessagesSquare width={55} height={55} />
-            <span className="text-2xl">Luis Gabriel</span>
-          </div>
-          <div className="flex justify-center items-center my-3 gap-2">
-            <input
-              type="text"
-              placeholder="Digite sua mensagem"
-              className="w-[80%] p-2 rounded-2xl"
-            />
-            <div className="bg-teal-500 p-3 rounded-full">
-              <SendHorizonal color="white" />
-            </div>
-          </div>
-        </div>
+        <ChatBox messages={messages} />
       </div>
     </div>
   )
