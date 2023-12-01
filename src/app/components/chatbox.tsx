@@ -8,7 +8,7 @@ interface IChatBoxProps {
 const ChatBox = ({ messages }: IChatBoxProps) => {
   const userId = '1'
   return (
-    <div className="w-[68%] flex flex-col place-content-between">
+    <div className="w-[68%] flex flex-col place-content-between bg-slate-500 bg-opacity-40 shadow-lg rounded-lg">
       <div className="bg-neutral-800 bg-opacity-10 w-full flex justify-center items-center p-5 gap-4 overflow-y-hidden">
         <MessagesSquare width={55} height={55} />
         <span className="text-2xl">Luis Gabriel</span>

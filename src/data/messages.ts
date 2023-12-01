@@ -32,47 +32,47 @@ const messages: IMessage[] = [
     createdAt: '25/08/2053',
   },
   {
-    id: '5',
+    id: '511',
     senderId: '2',
     content: 'O Vasco não cai!',
     createdAt: '25/08/2053',
   },
   {
-    id: '5',
+    id: '544',
     senderId: '2',
     content: 'O Vasco não cai!',
     createdAt: '25/08/2053',
   },
-  // {
-  //   id: '5',
-  //   senderId: '1',
-  //   content: 'O Vasco não cai!',
-  //   createdAt: '25/08/2053',
-  // },
-  // {
-  //   id: '5',
-  //   senderId: '2',
-  //   content: 'O Vasco não cai!',
-  //   createdAt: '25/08/2053',
-  // },
-  // {
-  //   id: '5',
-  //   senderId: '2',
-  //   content: 'O Vasco não cai!',
-  //   createdAt: '25/08/2053',
-  // },
-  // {
-  //   id: '5',
-  //   senderId: '1',
-  //   content: 'O Vasco não cai!',
-  //   createdAt: '25/08/2053',
-  // },
-  // {
-  //   id: '5',
-  //   senderId: '2',
-  //   content: 'O Vasco não cai!',
-  //   createdAt: '25/08/2053',
-  // },
+  {
+    id: '15',
+    senderId: '1',
+    content: 'O Vasco não cai!',
+    createdAt: '25/08/2053',
+  },
+  {
+    id: '56',
+    senderId: '2',
+    content: 'O Vasco não cai!',
+    createdAt: '25/08/2053',
+  },
+  {
+    id: '75',
+    senderId: '2',
+    content: 'O Vasco não cai!',
+    createdAt: '25/08/2053',
+  },
+  {
+    id: '577',
+    senderId: '1',
+    content: 'O Vasco não cai!',
+    createdAt: '25/08/2053',
+  },
+  {
+    id: '5777',
+    senderId: '2',
+    content: 'O Vasco não cai!',
+    createdAt: '25/08/2053',
+  },
 ]
 
 export default messages
