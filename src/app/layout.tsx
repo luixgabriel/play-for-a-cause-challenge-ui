@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import './globals.css'
 import { DefaultProviders } from './components/default-providers'
 
@@ -18,6 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
+        <ToastContainer position="bottom-right" theme="dark" autoClose={1500} />
         <DefaultProviders>{children}</DefaultProviders>
       </body>
     </html>

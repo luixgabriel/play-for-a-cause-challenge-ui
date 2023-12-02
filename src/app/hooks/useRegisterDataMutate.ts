@@ -1,11 +1,11 @@
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
-import { loginData } from '../../services/requests'
 import Cookies from 'js-cookie'
+import { registerData } from '../../services/requests'
 
-export function useLoginDataMutate() {
+export function useRegisterDataMutate() {
   const mutate = useMutation({
-    mutationFn: loginData,
+    mutationFn: registerData,
     retry: 2,
     onSuccess: (data) => {
       localStorage.setItem('user', JSON.stringify(data))
@@ -15,7 +15,7 @@ export function useLoginDataMutate() {
     },
     onError: (error) => {
       console.log(error)
-      toast.error('Erro ao fazer login!')
+      toast.error('Erro ao tentar fazer login!')
     },
   })
 

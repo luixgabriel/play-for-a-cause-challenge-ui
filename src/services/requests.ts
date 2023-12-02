@@ -1,11 +1,24 @@
 import axios from '../app/lib/axios'
 import { LoginData } from '../types/login-schema'
-import { toast } from 'react-toastify'
 
-// const registerData = async (data: RegisterData) => {
-//   const response = await axios.post('/auth/register', data)
-//   return response.data
-// }
+const registerData = async (data: {
+  name: string
+  email: string
+  password: string
+  image?: null | File
+}) => {
+  const formData = new FormData()
+  formData.append('name', data.name)
+  formData.append('email', data.email)
+  formData.append('password', data.password)
+  if (data.image) formData.append('image', data.image)
+  const response = await axios.post('/auth/register', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+  return response.data
+}
 
 const loginData = async (data: LoginData) => {
   const response = await axios.post('/auth/login', data)
@@ -171,4 +184,4 @@ const fetchDoubtById = async (id: string) => {
 //   return response
 // }
 
-export { loginData, fetchUsers, fetchDoubtById }
+export { loginData, fetchUsers, fetchDoubtById, registerData }

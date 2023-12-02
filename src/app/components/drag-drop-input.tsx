@@ -47,7 +47,7 @@ const Input = ({ dropzone }: InputProps) => {
     <div
       onClick={open}
       {...getRootProps()}
-      className={`w-full h-50 rounded-lg border-dashed border-4 mt-1 hover:border-gray-500 bg-gray-300 hover:bg-gray-400 transition-all
+      className={`w-full h-50 rounded-lg border-dashed border-4 mt-1 hover:border-gray-500 bg-gray-300 bg-opacity-30 hover:bg-gray-300 transition-all
       ${isDragActive ? 'border-blue-500' : 'border-gray-600'}`}
     >
       <label htmlFor="dropzone-file" className="cursor-pointer w-full h-full">
@@ -58,7 +58,7 @@ const Input = ({ dropzone }: InputProps) => {
             }`}
           />
           {isDragActive ? (
-            <p className="font-bold text-lg text-gray-700">
+            <p className="mb-2 text-lg text-gray-700 sm:text-md p-2 text-center">
               Solte para adicionar
             </p>
           ) : (

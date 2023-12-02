@@ -5,6 +5,12 @@ import { useForm } from 'react-hook-form'
 import { LoginData, loginSchema } from '../../types/login-schema'
 import { useLoginDataMutate } from '../hooks/useLoginDataMutate'
 import ProfilePicture from '../components/profile-picture'
+import { useRouter } from 'next/navigation'
+import { useAuth } from '../hooks/useAuth'
+import Cookies from 'js-cookie'
+import { useEffect } from 'react'
+import LoadingScreen from '../components/loading-screen'
+import LoadingIcon from '../components/loading-icon'
 
 const LoginPage = () => {
   const {
@@ -14,11 +20,14 @@ const LoginPage = () => {
   } = useForm<LoginData>({
     resolver: zodResolver(loginSchema),
   })
-  const { mutate } = useLoginDataMutate()
+  const { mutate, isPending } = useLoginDataMutate()
+  const router = useRouter()
+  const token = Cookies.get('token')
 
   const onSubmit = async (data: LoginData) => {
     mutate(data)
   }
+  if (token) router.push('chat')
   return (
     <div className="flex min-h-[90%] rounded-lg flex-1 flex-col justify-center px-6 py-12 lg:px-8 max-w-lg mx-auto bg-neutral-800 bg-opacity-10 shadow-lg ">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center justify-center">
@@ -74,20 +83,20 @@ const LoginPage = () => {
           <div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded-md bg-blak px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="flex w-1/2 mx-auto justify-center rounded-md bg-blak px-3 py-1.5  font-semibold leading-6 shadow-sm  bg-gradient-to-r from-teal-300 to-blue-200  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Entrar
+              {isPending ? <LoadingIcon /> : 'Entrar'}
             </button>
           </div>
         </form>
 
-        <p className="mt-10 text-center text-sm font-base">
-          Novo no bolhadev_help?{' '}
+        <p className="mt-10 text-center font-base">
+          Novo por aqui?{' '}
           <Link
             href="/register"
-            className="font-semibold leading-6 text-blue-600 hover:text-blue-500"
+            className="font-semibold leading-6  hover:text-blue-200"
           >
-            Crie sua conta aqui.
+            Crie sua conta!
           </Link>
         </p>
       </div>
