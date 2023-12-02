@@ -7,7 +7,6 @@ import { useChat } from '../hooks/useChat'
 import Profile from '../components/profile'
 import ProfilePicture from '../components/profile-picture'
 import { IOnlineUsers } from '../../types/online-users'
-import { useAuth } from '../hooks/useAuth'
 import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie'
 
@@ -15,7 +14,7 @@ const ContainerChat = () => {
   const { onlineUsers } = useChat()
   const router = useRouter()
   const token = Cookies.get('token')
-  // if (!isAuthenticated) return router.push('/')
+
   if (!token) router.push('/')
 
   return (
