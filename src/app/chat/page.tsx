@@ -9,13 +9,16 @@ import ProfilePicture from '../components/profile-picture'
 import { IOnlineUsers } from '../../types/online-users'
 import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie'
+import { useEffect } from 'react'
 
 const ContainerChat = () => {
   const { onlineUsers } = useChat()
   const router = useRouter()
   const token = Cookies.get('token')
 
-  if (!token) router.push('/')
+  useEffect(() => {
+    if (!token) router.push('/')
+  }, [])
 
   return (
     <ContainerMain>
