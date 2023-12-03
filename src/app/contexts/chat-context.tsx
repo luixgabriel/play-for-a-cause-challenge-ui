@@ -39,7 +39,7 @@ export function ChatProvider({ children, user }: ChatContextProps) {
         (participants) => participants.id !== user.id,
       ),
     }))
-    console.log(removeUserOwner)
+
     setUserChats(removeUserOwner)
   }, [data])
 

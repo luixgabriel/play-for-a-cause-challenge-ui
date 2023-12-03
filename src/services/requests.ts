@@ -44,6 +44,12 @@ const createChat = async (data: { userId: string; receiverId: string }) => {
   return response
 }
 
+const getMessagesOfChat = async (chatId: string | null) => {
+  const response = await axios.get(`/message/chat/${chatId}`)
+  console.log(response)
+  return response
+}
+
 const sendMessage = async (data: {
   senderId: string
   chatId: string
@@ -210,4 +216,11 @@ const userChats = async () => {
 //   return response
 // }
 
-export { loginData, fetchUsers, createChat, registerData, userChats }
+export {
+  loginData,
+  fetchUsers,
+  createChat,
+  registerData,
+  userChats,
+  getMessagesOfChat,
+}
