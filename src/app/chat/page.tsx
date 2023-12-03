@@ -9,7 +9,7 @@ import { IOnlineUsers } from '../../types/online-users'
 import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
-import { UsersRound, MessageSquare } from 'lucide-react'
+import { UsersRound, MessageSquare, Frown } from 'lucide-react'
 import { IUserChats } from '../../types/user-chats'
 import { useCreateChatMutate } from '../hooks/useCreateChatMutate'
 import { toast } from 'react-toastify'
@@ -26,11 +26,13 @@ const ContainerChat = () => {
   let chatIsExists: boolean
 
   const createChat = async (receiverId: string) => {
-    userChats?.forEach((item) => {
-      if (item.participants[0].id === receiverId) {
-        chatIsExists = true
-      }
-    })
+    if (userChats) {
+      userChats?.forEach((item) => {
+        if (item.participants[0].id === receiverId) {
+          chatIsExists = true
+        }
+      })
+    }
 
     if (chatIsExists) {
       toast.info('Você já tem um chat com esse usuário.')
@@ -101,7 +103,9 @@ const ContainerChat = () => {
                 <LoadingIcon />
               </div>
             ) : userChats?.length === 0 ? (
-              <h1>sem chats</h1>
+              <div className="flex items-center justify-center m-2 gap-1">
+                <span>Você ainda não tem nenhuma conversa</span> <Frown />
+              </div>
             ) : (
               userChats?.map((item: IUserChats) => (
                 <div
@@ -135,11 +139,7 @@ const ContainerChat = () => {
                       <span className="text-sm">
                         {item.participants[0].name}
                       </span>
-                      <span>
-                        {item.participants[0].id !== user?.id
-                          ? `Você: ${item.lastMessage}`
-                          : item.lastMessage}
-                      </span>
+                      <span>{item.lastMessage}</span>
                     </div>
                   </div>
                 </div>

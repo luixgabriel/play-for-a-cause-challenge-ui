@@ -47,7 +47,6 @@ const ChatBox = ({ receiver }: IChatBoxProps) => {
           queryKey: ['fetchMessagesOfChat', receiver?.id],
         })
         setChatMessages(res.data)
-        queryClient.invalidateQueries({ queryKey: ['fetchMessagesOfChat'] })
       }
     }
     getMessages()

@@ -45,7 +45,6 @@ export function ChatProvider({ children, user }: ChatContextProps) {
         (participants) => participants.id !== user.id,
       ),
     }))
-
     setUserChats(removeUserOwner)
   }, [data])
 
