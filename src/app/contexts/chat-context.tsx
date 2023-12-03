@@ -44,7 +44,7 @@ export function ChatProvider({ children, user }: ChatContextProps) {
   }, [data])
 
   useEffect(() => {
-    const newSocket = io('http://localhost:3001')
+    const newSocket = io('https://play-for-a-cause-chat.onrender.com')
     setSocket((prevSocket) => {
       if (prevSocket !== null) {
         prevSocket.disconnect()
