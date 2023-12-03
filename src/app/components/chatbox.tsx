@@ -7,6 +7,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { useChat } from '../hooks/useChat'
 import { useQueryClient } from '@tanstack/react-query'
 import { getMessagesOfChat } from '../../services/requests'
+import { format } from 'date-fns'
 
 interface IChatBoxProps {
   messages?: IMessage[]
@@ -17,7 +18,7 @@ const ChatBox = ({ receiver }: IChatBoxProps) => {
   const [chatMessages, setChatMessages] = useState<IMessage[]>([])
   const { register, handleSubmit, reset } = useForm<{ content: string }>()
   const queryClient = useQueryClient()
-  const { socket, messageList } = useChat()
+  const { socket, messageList, setMessageList } = useChat()
   const { user } = useAuth()
   const bottomRef = useRef<HTMLDivElement>(null)
 
@@ -34,6 +35,7 @@ const ChatBox = ({ receiver }: IChatBoxProps) => {
     }
 
     socket?.emit('sendMessage', sendToSocket)
+    setMessageList((prev: any) => [...prev, data.content])
     reset()
   }
 
@@ -65,16 +67,21 @@ const ChatBox = ({ receiver }: IChatBoxProps) => {
         <div className="flex flex-col p-3">
           {receiver?.Messages?.length !== 0
             ? chatMessages?.map((item: IMessage) => (
-                <span
-                  key={item.id}
-                  className={`p-3  rounded-2xl justify-center my-2 mx-1 ${
-                    item.senderId === user?.id
-                      ? 'self-start bg-blue-400'
-                      : 'self-end bg-blue-200 '
-                  }`}
-                >
-                  {item.content}
-                </span>
+                <>
+                  <div
+                    key={item.id}
+                    className={`px-3 py-2 rounded-2xl justify-center my-2 mx-1 ${
+                      item.senderId === user?.id
+                        ? 'self-start bg-blue-400'
+                        : 'self-end bg-blue-200 '
+                    }`}
+                  >
+                    <p> {item.content}</p>
+                    <span className="text-xs">
+                      {format(new Date(item.createdAt), 'HH:mm')}
+                    </span>
+                  </div>
+                </>
               ))
             : (!receiver?.Messages || receiver.Messages.length === 0) && (
                 <div className="flex items-center justify-center mt-52">

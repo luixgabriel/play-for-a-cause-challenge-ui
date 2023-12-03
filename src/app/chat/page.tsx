@@ -14,6 +14,7 @@ import { IUserChats } from '../../types/user-chats'
 import { useCreateChatMutate } from '../hooks/useCreateChatMutate'
 import { toast } from 'react-toastify'
 import { useAuth } from '../hooks/useAuth'
+import LoadingIcon from '../components/loading-icon'
 
 const ContainerChat = () => {
   const [receiver, setReceiver] = useState<IUserChats | null>(null)
@@ -23,7 +24,7 @@ const ContainerChat = () => {
   const router = useRouter()
   const token = Cookies.get('token')
   let chatIsExists: boolean
-  console.log(userChats)
+
   const createChat = async (receiverId: string) => {
     userChats?.forEach((item) => {
       if (item.participants[0].id === receiverId) {
@@ -96,7 +97,9 @@ const ContainerChat = () => {
               Seus chats:
             </span>
             {isLoading ? (
-              <h1>carregando</h1>
+              <div className="w-full p-3 flex items-center justify-center">
+                <LoadingIcon />
+              </div>
             ) : userChats?.length === 0 ? (
               <h1>sem chats</h1>
             ) : (
@@ -132,7 +135,11 @@ const ContainerChat = () => {
                       <span className="text-sm">
                         {item.participants[0].name}
                       </span>
-                      <span>{item.lastMessage}</span>
+                      <span>
+                        {item.participants[0].id !== user?.id
+                          ? `Você: ${item.lastMessage}`
+                          : item.lastMessage}
+                      </span>
                     </div>
                   </div>
                 </div>
