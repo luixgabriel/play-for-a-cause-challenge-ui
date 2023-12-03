@@ -10,6 +10,7 @@ export function useLoginDataMutate() {
     onSuccess: (data) => {
       localStorage.setItem('user', JSON.stringify(data))
       Cookies.set('token', data.token)
+      Cookies.set('userId', data.id)
       toast.success('Usuário autenticado com sucesso!')
       window.location.replace('/chat')
     },
