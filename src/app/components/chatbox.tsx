@@ -62,7 +62,7 @@ const ChatBox = ({ receiver }: IChatBoxProps) => {
       queryClient.invalidateQueries({
         queryKey: ['user-chats'],
       })
-      setMessageList((prev) => [...prev, data.content])
+      setMessageList((prev: any) => [...prev, data.content])
     })
 
     return () => {
@@ -107,7 +107,9 @@ const ChatBox = ({ receiver }: IChatBoxProps) => {
 
           {messageList.length > 0 &&
             // Adiciona as mensagens de messageList
-            messageList.map((item, index) => <span key={index}>{item}</span>)}
+            messageList.map((item: any, index: number) => (
+              <span key={index}>{item}</span>
+            ))}
 
           {(!receiver?.Messages || receiver.Messages.length === 0) &&
             messageList.length === 0 && (
