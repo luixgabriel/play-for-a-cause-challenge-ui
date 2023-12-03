@@ -41,7 +41,6 @@ const ContainerChat = () => {
             ))}
           </div>
         </div>
-        <ChatBox messages={messages} />
       </div>
     </div>
   )
