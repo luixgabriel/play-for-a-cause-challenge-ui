@@ -1,6 +1,6 @@
 import { Laugh, MessagesSquare, SendHorizonal } from 'lucide-react'
 import { IMessage } from '../../data/messages'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useAuth } from '../hooks/useAuth'
 
 import { io } from 'socket.io-client'
@@ -19,16 +19,16 @@ interface IChatBoxProps {
 const ChatBox = ({ receiver }: IChatBoxProps) => {
   const [messageList, setMessageList] = useState<any>([])
   const [chatMessages, setChatMessages] = useState<any>([])
-  const { register, handleSubmit } = useForm<{ content: string }>()
+  const { register, handleSubmit, reset } = useForm<{ content: string }>()
   const queryClient = useQueryClient()
   const { socket } = useChat()
   const { user } = useAuth()
+  const bottomRef = useRef<HTMLDivElement>(null)
+  const messageRef = useRef()
 
-  const { data, isLoading, isError } = useQuery({
-    queryFn: () => getMessagesOfChat(receiver?.id as string),
-    queryKey: ['fetchMessagesOfChat', receiver?.id],
-    retry: 2,
-  })
+  const scrollDown = () => {
+    bottomRef?.current?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   const onSubmit: SubmitHandler<{ content: string }> = (data) => {
     const sendToSocket = {
@@ -39,12 +39,12 @@ const ChatBox = ({ receiver }: IChatBoxProps) => {
     }
 
     socket?.emit('sendMessage', sendToSocket)
+    reset()
   }
 
   useEffect(() => {
     async function getMessages() {
       if (receiver) {
-        // Dispare a requisição usando o React Query
         const res = await queryClient.fetchQuery({
           queryFn: () => getMessagesOfChat(receiver?.id as string),
           queryKey: ['fetchMessagesOfChat', receiver?.id],
@@ -58,7 +58,6 @@ const ChatBox = ({ receiver }: IChatBoxProps) => {
 
   useEffect(() => {
     socket?.on('sendMessage', (data) => {
-      console.log(data)
       queryClient.invalidateQueries({
         queryKey: ['user-chats'],
       })
@@ -71,13 +70,9 @@ const ChatBox = ({ receiver }: IChatBoxProps) => {
     }
   }, [socket])
 
-  console.log(chatMessages)
-
   useEffect(() => {
-    const getMessages = async () => {
-      await axios.get('/messages/chat' + receiver?.id)
-    }
-  }, [receiver])
+    scrollDown()
+  }, [chatMessages])
 
   return (
     <div className="w-[68%] flex flex-col place-content-between bg-slate-500 bg-opacity-40 shadow-lg rounded-lg">
@@ -87,40 +82,30 @@ const ChatBox = ({ receiver }: IChatBoxProps) => {
       </div>
       <div className="h-full">
         <div className="flex flex-col p-3">
-          {receiver?.Messages?.length !== 0 ? (
-            chatMessages?.map((item: IMessage) => (
-              <span
-                key={item.id}
-                className={`p-3  rounded-2xl justify-center my-2 mx-1 ${
-                  item.senderId === user?.id
-                    ? 'self-start bg-blue-400'
-                    : 'self-end bg-blue-200 '
-                }`}
-              >
-                {item.content}
-              </span>
-            ))
-          ) : (
-            // Se receiver.Messages não existe ou está vazio
-            <></>
-          )}
-
-          {messageList.length > 0 &&
-            // Adiciona as mensagens de messageList
-            messageList.map((item: any, index: number) => (
-              <span key={index}>{item}</span>
-            ))}
-
-          {(!receiver?.Messages || receiver.Messages.length === 0) &&
-            messageList.length === 0 && (
-              // Se tanto receiver.Messages quanto messageList estão vazios
-              <div className="flex items-center justify-center mt-52">
-                <h1 className="text-2xl flex items-center gap-2">
-                  Tome iniciativa! Inicie uma conversa
-                  <Laugh size={30} />
-                </h1>
-              </div>
-            )}
+          {receiver?.Messages?.length !== 0
+            ? chatMessages?.map((item: IMessage) => (
+                <span
+                  key={item.id}
+                  className={`p-3  rounded-2xl justify-center my-2 mx-1 ${
+                    item.senderId === user?.id
+                      ? 'self-start bg-blue-400'
+                      : 'self-end bg-blue-200 '
+                  }`}
+                >
+                  {item.content}
+                </span>
+              ))
+            : (!receiver?.Messages || receiver.Messages.length === 0) &&
+              messageList.length === 0 && (
+                // Se tanto receiver.Messages quanto messageList estão vazios
+                <div className="flex items-center justify-center mt-52">
+                  <h1 className="text-2xl flex items-center gap-2">
+                    Tome iniciativa! Inicie uma conversa
+                    <Laugh size={30} />
+                  </h1>
+                </div>
+              )}
+          <div ref={bottomRef} />
         </div>
       </div>
       <div className="flex justify-center items-center my-3 gap-2 overflow-y-hidden h-16 ">
