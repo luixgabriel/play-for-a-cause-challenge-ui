@@ -23,7 +23,7 @@ const ContainerChat = () => {
   const router = useRouter()
   const token = Cookies.get('token')
   let chatIsExists: boolean
-
+  console.log(userChats)
   const createChat = async (receiverId: string) => {
     userChats?.forEach((item) => {
       if (item.participants[0].id === receiverId) {

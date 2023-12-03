@@ -1,18 +1,26 @@
-import { ReactNode, createContext, useEffect, useState } from 'react'
+import {
+  ReactNode,
+  SetStateAction,
+  createContext,
+  useEffect,
+  useState,
+} from 'react'
 import { io, Socket } from 'socket.io-client'
 import { IUserDecoded } from '../../types/user'
 import { IOnlineUsers } from '../../types/online-users'
-import { userChats } from '../../services/requests'
 import { useFetchUserChats } from '../hooks/useGetUserChats'
 import { IUserChats } from '../../types/user-chats'
+import { useQueryClient } from '@tanstack/react-query'
 
 interface IChatContext {
   socket: Socket | null
   setSocket: (data: Socket | null) => void
-  onlineUsers: any
+  onlineUsers: IOnlineUsers[] | null
   setOnlineUsers: (data: any) => void
-  userChats: any[] | null
+  userChats: IUserChats[] | null
   isLoading: boolean
+  messageList: string[]
+  setMessageList: (value: SetStateAction<string[]>) => void
 }
 
 interface ChatContextProps {
@@ -23,13 +31,11 @@ interface ChatContextProps {
 export const ChatContext = createContext({} as IChatContext)
 
 export function ChatProvider({ children, user }: ChatContextProps) {
-  const [onlineUsers, setOnlineUsers] = useState(null)
-  const [messages, setMessages] = useState<any[] | null>(null)
-  const [newMessage, setNewMessage] = useState<any[] | null>(null)
-  const [receiverId, setReceiverId] = useState<any | null>(null)
-  const [userChats, setUserChats] = useState<any[] | null>(null)
+  const queryClient = useQueryClient()
+  const [onlineUsers, setOnlineUsers] = useState<any>(null)
+  const [messageList, setMessageList] = useState<string[]>([])
+  const [userChats, setUserChats] = useState<IUserChats[] | null>(null)
   const [socket, setSocket] = useState<Socket | null>(null)
-
   const { data, isLoading } = useFetchUserChats()
 
   useEffect(() => {
@@ -44,7 +50,7 @@ export function ChatProvider({ children, user }: ChatContextProps) {
   }, [data])
 
   useEffect(() => {
-    const newSocket = io('https://play-for-a-cause-chat.onrender.com')
+    const newSocket = io('http://localhost:3001')
     setSocket((prevSocket) => {
       if (prevSocket !== null) {
         prevSocket.disconnect()
@@ -88,31 +94,27 @@ export function ChatProvider({ children, user }: ChatContextProps) {
         )
       })
     }
-
-    // Adiciona um ouvinte para o evento 'connect'
     socket.on('connect', handleConnect)
-
-    // Remove o ouvinte quando o componente é desmontado
     return () => {
       socket.disconnect()
       socket.off('sendMessage', handleConnect)
     }
   }, [])
 
-  // useEffect(() => {
-  //   if (socket === null) return
+  useEffect(() => {
+    if (socket === null) return
+    socket.on('sendMessage', (data) => {
+      queryClient.invalidateQueries({
+        queryKey: ['user-chats'],
+      })
+      setMessageList((prev: any) => [...prev, data.content])
+    })
 
-  //   socket.on('getMessage', (res) => {
-  //     if (currentChat?._id !== res.chatId) return
-
-  //     setMessages((prev) => [...prev, res])
-  //   })
-
-  //   return () => {
-  //     socket.off('getMessage')
-  //     socket.off('getNotification')
-  //   }
-  // }, [socket, currentChat])
+    return () => {
+      socket.disconnect()
+      socket.off('sendMessage')
+    }
+  }, [socket])
 
   return (
     <ChatContext.Provider
@@ -123,6 +125,8 @@ export function ChatProvider({ children, user }: ChatContextProps) {
         setSocket,
         userChats,
         isLoading,
+        messageList,
+        setMessageList,
       }}
     >
       {children}

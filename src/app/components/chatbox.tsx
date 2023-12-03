@@ -2,13 +2,10 @@ import { Laugh, MessagesSquare, SendHorizonal } from 'lucide-react'
 import { IMessage } from '../../data/messages'
 import { useEffect, useRef, useState } from 'react'
 import { useAuth } from '../hooks/useAuth'
-
-import { io } from 'socket.io-client'
 import { IUserChats } from '../../types/user-chats'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useChat } from '../hooks/useChat'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import axios from '../lib/axios'
+import { useQueryClient } from '@tanstack/react-query'
 import { getMessagesOfChat } from '../../services/requests'
 
 interface IChatBoxProps {
@@ -17,14 +14,12 @@ interface IChatBoxProps {
 }
 
 const ChatBox = ({ receiver }: IChatBoxProps) => {
-  const [messageList, setMessageList] = useState<any>([])
-  const [chatMessages, setChatMessages] = useState<any>([])
+  const [chatMessages, setChatMessages] = useState<IMessage[]>([])
   const { register, handleSubmit, reset } = useForm<{ content: string }>()
   const queryClient = useQueryClient()
-  const { socket } = useChat()
+  const { socket, messageList } = useChat()
   const { user } = useAuth()
   const bottomRef = useRef<HTMLDivElement>(null)
-  const messageRef = useRef()
 
   const scrollDown = () => {
     bottomRef?.current?.scrollIntoView({ behavior: 'smooth' })
@@ -57,20 +52,6 @@ const ChatBox = ({ receiver }: IChatBoxProps) => {
   }, [receiver, queryClient, messageList])
 
   useEffect(() => {
-    socket?.on('sendMessage', (data) => {
-      queryClient.invalidateQueries({
-        queryKey: ['user-chats'],
-      })
-      setMessageList((prev: any) => [...prev, data.content])
-    })
-
-    return () => {
-      socket?.disconnect()
-      socket?.off('sendMessage')
-    }
-  }, [socket])
-
-  useEffect(() => {
     scrollDown()
   }, [chatMessages])
 
@@ -95,9 +76,7 @@ const ChatBox = ({ receiver }: IChatBoxProps) => {
                   {item.content}
                 </span>
               ))
-            : (!receiver?.Messages || receiver.Messages.length === 0) &&
-              messageList.length === 0 && (
-                // Se tanto receiver.Messages quanto messageList estão vazios
+            : (!receiver?.Messages || receiver.Messages.length === 0) && (
                 <div className="flex items-center justify-center mt-52">
                   <h1 className="text-2xl flex items-center gap-2">
                     Tome iniciativa! Inicie uma conversa

@@ -50,20 +50,9 @@ const getMessagesOfChat = async (chatId: string | null) => {
   return response
 }
 
-const sendMessage = async (data: {
-  senderId: string
-  chatId: string
-  content: string
-}) => {
-  const response = await axios.post('/message', data)
-  console.log(response)
-  return response
-}
-
 const userChats = async () => {
   const userId = Cookies.get('userId')
   const response = await axios.get(`/chat/user-chats/${userId}`)
-  console.log(response)
   return response
 }
 
