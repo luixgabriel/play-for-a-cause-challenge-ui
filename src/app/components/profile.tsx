@@ -10,13 +10,14 @@ const Profile = () => {
   const [isHovered, setIsHovered] = useState(false)
   const logout = () => {
     Cookies.remove('token')
+    Cookies.remove('userId')
     localStorage.removeItem('user')
     window.location.reload()
   }
   const { user } = useAuth()
 
   return (
-    <div className="flex items-center justify-center gap-3 py-3 px-5 bg-slate-700 bg-opacity-20">
+    <div className="flex items-center justify-center gap-3 py-3 px-5 bg-slate-700 bg-opacity-20 mb-4">
       {!user && <LoadingScreen />}
       {user?.imageUrl ? (
         <>

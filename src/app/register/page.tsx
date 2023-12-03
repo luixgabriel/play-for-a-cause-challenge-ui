@@ -5,10 +5,8 @@ import { FileInput } from '../components/drag-drop-input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { RegisterData, registerSchema } from '../../types/register-schema'
 import { useRegisterDataMutate } from '../hooks/useRegisterDataMutate'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import LoadingIcon from '../components/loading-icon'
-import { useRouter } from 'next/navigation'
-import Cookies from 'js-cookie'
 
 const RegisterPage = () => {
   const {
@@ -18,9 +16,7 @@ const RegisterPage = () => {
   } = useForm<RegisterData>({
     resolver: zodResolver(registerSchema),
   })
-  const token = Cookies.get('token')
   const [image, setImage] = useState<File | null>(null)
-  const router = useRouter()
   const { mutate, isPending } = useRegisterDataMutate()
 
   const handleFileChange = async (file: File) => {
@@ -31,10 +27,6 @@ const RegisterPage = () => {
     const newData = { ...data, image }
     mutate(newData)
   }
-
-  useEffect(() => {
-    if (!token) router.push('/')
-  }, [])
 
   return (
     <ContainerMain>

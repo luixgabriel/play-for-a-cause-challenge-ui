@@ -1,5 +1,6 @@
 import axios from '../app/lib/axios'
 import { LoginData } from '../types/login-schema'
+import Cookies from 'js-cookie'
 
 const registerData = async (data: {
   name: string
@@ -30,8 +31,33 @@ const fetchUsers = async () => {
   return response
 }
 
-const fetchDoubtById = async (id: string) => {
-  const response = await axios.get(`/doubts/${id}`)
+const createChat = async (data: { userId: string; receiverId: string }) => {
+  console.log(data)
+  const sendData = { participants: [data.userId, data.receiverId] }
+  const token = Cookies.get('token')
+  const response = await axios.post('/chat', sendData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  console.log(response)
+  return response
+}
+
+const sendMessage = async (data: {
+  senderId: string
+  chatId: string
+  content: string
+}) => {
+  const response = await axios.post('/message', data)
+  console.log(response)
+  return response
+}
+
+const userChats = async () => {
+  const userId = Cookies.get('userId')
+  const response = await axios.get(`/chat/user-chats/${userId}`)
+  console.log(response)
   return response
 }
 
@@ -184,4 +210,4 @@ const fetchDoubtById = async (id: string) => {
 //   return response
 // }
 
-export { loginData, fetchUsers, fetchDoubtById, registerData }
+export { loginData, fetchUsers, createChat, registerData, userChats }
