@@ -18,7 +18,7 @@ import LoadingIcon from '../components/loading-icon'
 
 const ContainerChat = () => {
   const [receiver, setReceiver] = useState<IUserChats | null>(null)
-  const { mutate } = useCreateChatMutate()
+  const { mutate, isPending } = useCreateChatMutate()
   const { onlineUsers, userChats, isLoading } = useChat()
   const { user } = useAuth()
   const router = useRouter()
@@ -62,7 +62,7 @@ const ContainerChat = () => {
               {onlineUsers?.map((item: IOnlineUsers) => (
                 <div
                   key={item.user.id}
-                  className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-200 hover:bg-opacity-30 rounded-lg"
+                  className="flex items-center gap-2 p-2 hover:bg-slate-200 hover:bg-opacity-30 rounded-lg"
                 >
                   <div className="flex items-center gap-2">
                     <div className="relative">
@@ -87,7 +87,11 @@ const ContainerChat = () => {
                   </div>
                   <div className="flex flex-col">
                     <span className="text-sm">{item.user.name}</span>
-                    <button onClick={() => createChat(item.user.id)}>
+                    <button
+                      onClick={() => createChat(item.user.id)}
+                      className="hover:text-blue-500"
+                      disabled={isPending}
+                    >
                       Iniciar chat
                     </button>
                   </div>

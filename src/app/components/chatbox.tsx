@@ -64,7 +64,7 @@ const ChatBox = ({ receiver }: IChatBoxProps) => {
       </div>
       <div className="h-full">
         <div className="flex flex-col p-3">
-          {receiver?.Messages?.length !== 0
+          {chatMessages.length !== 0
             ? chatMessages?.map((item: IMessage) => (
                 <>
                   <div
