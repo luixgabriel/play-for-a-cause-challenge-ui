@@ -47,6 +47,7 @@ const ChatBox = ({ receiver }: IChatBoxProps) => {
           queryKey: ['fetchMessagesOfChat', receiver?.id],
         })
         setChatMessages(res.data)
+        queryClient.refetchQueries({ queryKey: ['user-chats'] })
       }
     }
     getMessages()

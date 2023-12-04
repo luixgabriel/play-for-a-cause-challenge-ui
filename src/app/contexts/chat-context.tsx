@@ -90,6 +90,7 @@ export function ChatProvider({ children, user }: ChatContextProps) {
       })
       setMessageList((prev: any) => [...prev, data.content])
     })
+
     return () => {
       socket.disconnect()
       socket.off('sendMessage')

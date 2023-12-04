@@ -25,7 +25,6 @@ const ContainerChat = () => {
   const token = Cookies.get('token')
   let chatIsExists: boolean
 
-  console.log(userChats)
   const createChat = async (receiverId: string) => {
     if (userChats) {
       userChats?.forEach((item) => {
@@ -136,8 +135,6 @@ const ContainerChat = () => {
                         ) : (
                           <ProfilePicture widht="48" height="48" />
                         )}
-
-                        <div className="absolute bottom-0 right-0 h-3 w-3 bg-green-500 rounded-full"></div>
                       </div>
                     </div>
                     <div className="flex flex-col">
