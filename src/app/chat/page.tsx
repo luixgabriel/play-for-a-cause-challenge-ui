@@ -25,6 +25,7 @@ const ContainerChat = () => {
   const token = Cookies.get('token')
   let chatIsExists: boolean
 
+  console.log(userChats)
   const createChat = async (receiverId: string) => {
     if (userChats) {
       userChats?.forEach((item) => {

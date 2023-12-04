@@ -84,24 +84,6 @@ export function ChatProvider({ children, user }: ChatContextProps) {
 
   useEffect(() => {
     if (socket === null) return
-
-    const handleConnect = () => {
-      socket.emit('sendMessage', user?.id)
-      socket.on('getUsers', (res) => {
-        setOnlineUsers(
-          res.filter((item: IOnlineUsers) => item.user.id !== user.id),
-        )
-      })
-    }
-    socket.on('connect', handleConnect)
-    return () => {
-      socket.disconnect()
-      socket.off('sendMessage', handleConnect)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (socket === null) return
     socket.on('sendMessage', (data) => {
       queryClient.invalidateQueries({
         queryKey: ['user-chats'],
