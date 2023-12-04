@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Desafio Play for a cause, Chat em Next.js!
 
-## Getting Started
+O desafio constava em desenvolver uma aplicação de chat com next.js, com uma autenticação de usuário simples e envio de mensagens em tempo real.
 
-First, run the development server:
+## Visão Geral
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+O projeto foi construído com o framework Next.js, oferecendo uma arquitetura eficiente e facilitando o desenvolvimento de aplicações web. A estilização ficou por conta do Tailwind CSS, proporcionando um design moderno e responsivo.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tecnologias Utilizadas
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Tailwind CSS:** Utilizado para a estilização da aplicação, o Tailwind CSS simplifica o processo de criação de interfaces bonitas e responsivas.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **Cookies e Local Storage:** A integração de Cookies é empregada para armazenar o token JWT de forma segura, enquanto o Local Storage é utilizado para a persistência de dados do usuário, garantindo uma experiência contínua.
 
-## Learn More
+- **Context API:** A Context API do React é adotada para o gerenciamento eficiente de estados globais na aplicação, permitindo o compartilhamento de informações cruciais entre diferentes componentes.
 
-To learn more about Next.js, take a look at the following resources:
+- **Socket.IO:** A versão cliente do Socket.IO é incorporada para possibilitar ações em tempo real, melhorando a interatividade e responsividade do chat.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Funcionalidades
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **Autenticação via Cookies:** Os usuários podem efetuar login de forma segura, com seus dados sendo mantidos através de cookies para uma experiência contínua.
 
-## Deploy on Vercel
+- **Usuários onlines:** Os usuários podem ver quem está online na aplicação a qualquer momento, e iniciar um chat com a pessoa desejada.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Criação de chats e envio de mensagens em tempo real:** Utilizando o socket.io a aplicação te permite criar chats e enviar mensagens a qualquer usário online e ter a resposta imediata com os usos do webSocket.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Pré-requisitos
+
+Antes de começar, certifique-se de ter o Node.js e o npm instalados em sua máquina.
+
+## Instalação
+
+1. Clone este repositório: `git clone [https://github.com/seu-usuario/nome-do-projeto.git](https://github.com/luixgabriel/play-for-a-cause-challenge-ui.git)`
+2. Navegue até o diretório do projeto: `cd play-for-a-cause-ui`
+3. Instale as dependências: `npm install`
+
+## Executando a Aplicação
+
+1. Inicie o servidor de desenvolvimento: `npm run dev`
+2. Abra seu navegador e acesse [http://localhost:3000](http://localhost:3000)
+
+Agora você deve estar pronto para explorar a aplicação de chat!
+
+## Novos conhecimentos e Dificuldades
+
+Embora eu já tenha estudado sobre WebSockets e o framework Socket.IO, nunca havia desenvolvido efetivamente uma aplicação utilizando essa tecnologia. No início, enfrentei algumas dificuldades com a abertura e o fechamento de sockets, muitos clientes acessando, mas, ao me aprofundar na documentação, consegui superar esses desafios e desenvolver uma aplicação utilizando essa tecnologia de forma eficiente. Foi uma experiência enriquecedora para o meu conhecimento e curiosidade para estudar mais sobre essa tecnologia.
+
