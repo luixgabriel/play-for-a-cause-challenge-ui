@@ -47,7 +47,7 @@ const ChatBox = ({ receiver }: IChatBoxProps) => {
           queryKey: ['fetchMessagesOfChat', receiver?.id],
         })
         setChatMessages(res.data)
-        queryClient.refetchQueries({ queryKey: ['user-chats'] })
+        queryClient.invalidateQueries({ queryKey: ['user-chats'] })
       }
     }
     getMessages()
@@ -58,10 +58,12 @@ const ChatBox = ({ receiver }: IChatBoxProps) => {
   }, [chatMessages])
 
   return (
-    <div className="w-[68%] flex flex-col place-content-between bg-slate-500 bg-opacity-40 shadow-lg rounded-lg">
+    <div className=" flex flex-col place-content-between bg-slate-500 bg-opacity-40 shadow-lg rounded-lg md:w-[68%]">
       <div className="bg-neutral-800 bg-opacity-10 w-full flex justify-center items-center p-5 gap-4 overflow-y-hidden">
         <MessagesSquare width={48} height={48} />
-        <span className="text-2xl">{receiver?.participants[0].name || ''}</span>
+        <span className="text-xl md:text-2xl">
+          {receiver?.participants[0].name || ''}
+        </span>
       </div>
       <div className="h-full">
         <div className="flex flex-col p-3">
@@ -102,7 +104,7 @@ const ChatBox = ({ receiver }: IChatBoxProps) => {
           <input
             type="text"
             placeholder="Enviar mensagem"
-            className="block w-[90%] rounded-md border-0 py-1.5 px-2 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-black  focus:ring-2 focus:ring-inset focus:outline-none"
+            className="block md:w-[90%] rounded-md border-0 py-1.5 px-2 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-black  focus:ring-2 focus:ring-inset focus:outline-none"
             {...register('content', {
               required: 'Campo obrigatório',
             })}

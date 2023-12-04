@@ -51,52 +51,58 @@ const ContainerChat = () => {
   return (
     <ContainerMain>
       <div className="h-[90%] w-[90%] rounded-lg">
-        <div className="flex h-full text-slate-950 gap-5">
-          <div className="bg-slate-500 bg-opacity-40 h-full w-[32%] rounded-lg shadow-lg">
+        <div className="flex flex-col h-full text-slate-950 gap-5 md:flex-row">
+          <div className="bg-slate-500 bg-opacity-40 h-80 rounded-lg shadow-lg md:w-[32%] md:h-full">
             <Profile />
             <span className="p-1 ml-4 flex gap-2 text-gray-700">
               <UsersRound />
               Usuários online:
             </span>
             <div className="p-2 flex flex-col">
-              {onlineUsers?.map((item: IOnlineUsers) => (
-                <div
-                  key={item.user.id}
-                  className="flex items-center gap-2 p-2 hover:bg-slate-200 hover:bg-opacity-30 rounded-lg"
-                >
-                  <div className="flex items-center gap-2">
-                    <div className="relative">
-                      {item?.user.imageUrl ? (
-                        <>
-                          <div className="w-12 h-12 overflow-y-hidden rounded-full flex items-center bg-red-500 justify-center">
-                            <Image
-                              src={item.user.imageUrl}
-                              width={100}
-                              height={100}
-                              alt="user-icon"
-                              className="rounded-full cursor-pointer"
-                            />
-                          </div>
-                        </>
-                      ) : (
-                        <ProfilePicture widht="48" height="48" />
-                      )}
+              {onlineUsers?.length === 0 ? (
+                <div className="flex items-center justify-center m-2 gap-1">
+                  <span>Nenhum usuário online no momento.</span>
+                </div>
+              ) : (
+                onlineUsers?.map((item: IOnlineUsers) => (
+                  <div
+                    key={item.user.id}
+                    className="flex items-center gap-2 p-2 hover:bg-slate-200 hover:bg-opacity-30 rounded-lg"
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="relative">
+                        {item?.user.imageUrl ? (
+                          <>
+                            <div className="w-12 h-12 overflow-y-hidden rounded-full flex items-center bg-red-500 justify-center">
+                              <Image
+                                src={item.user.imageUrl}
+                                width={100}
+                                height={100}
+                                alt="user-icon"
+                                className="rounded-full cursor-pointer"
+                              />
+                            </div>
+                          </>
+                        ) : (
+                          <ProfilePicture widht="48" height="48" />
+                        )}
 
-                      <div className="absolute bottom-0 right-0 h-3 w-3 bg-green-500 rounded-full"></div>
+                        <div className="absolute bottom-0 right-0 h-3 w-3 bg-green-500 rounded-full"></div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-sm">{item.user.name}</span>
+                      <button
+                        onClick={() => createChat(item.user.id)}
+                        className="hover:text-blue-500"
+                        disabled={isPending}
+                      >
+                        Iniciar chat
+                      </button>
                     </div>
                   </div>
-                  <div className="flex flex-col">
-                    <span className="text-sm">{item.user.name}</span>
-                    <button
-                      onClick={() => createChat(item.user.id)}
-                      className="hover:text-blue-500"
-                      disabled={isPending}
-                    >
-                      Iniciar chat
-                    </button>
-                  </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
             <span className="p-1 ml-4 flex gap-2 text-gray-700">
               <MessageSquare />
