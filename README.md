@@ -30,7 +30,7 @@ Antes de começar, certifique-se de ter o Node.js e o npm instalados em sua máq
 
 ## Instalação
 
-1. Clone este repositório: `git clone [https://github.com/seu-usuario/nome-do-projeto.git](https://github.com/luixgabriel/play-for-a-cause-challenge-ui.git)`
+1. Clone este repositório: git clone [https://github.com/luixgabriel/play-for-a-cause-challenge-ui.git](https://github.com/luixgabriel/play-for-a-cause-challenge-ui.git)
 2. Navegue até o diretório do projeto: `cd play-for-a-cause-ui`
 3. Instale as dependências: `npm install`
 
