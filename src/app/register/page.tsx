@@ -30,15 +30,15 @@ const RegisterPage = () => {
 
   return (
     <ContainerMain>
-      <div className="flex min-h-[90%] max-w-[60%] rounded-lg flex-1 flex-col justify-center px-6 py-12 lg:px-8 mx-auto bg-neutral-800 bg-opacity-10 shadow-lg text-black">
+      <div className="flex min-h-[90%] md:max-w-[60%] rounded-lg flex-1 flex-col justify-center px-6 py-12 lg:px-8 mx-auto bg-neutral-800 bg-opacity-10 shadow-lg text-black">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className=" mt-5 text-center text-2xl leading-9">Registre-se</h2>
         </div>
 
         <div className="mt-5 w-full">
           <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex w-full items-center justify-center gap-8">
-              <div className=" w-[50%]">
+            <div className="flex w-full items-center justify-center gap-8 flex-col md:flex-row">
+              <div className=" w-[80%] md:w-[50%]">
                 {' '}
                 <div>
                   <label

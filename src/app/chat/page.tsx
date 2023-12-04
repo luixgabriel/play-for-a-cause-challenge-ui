@@ -97,7 +97,7 @@ const ContainerChat = () => {
                         className="hover:text-blue-500"
                         disabled={isPending}
                       >
-                        Iniciar chat
+                        {isPending ? 'Aguarde...' : 'Iniciar chat'}
                       </button>
                     </div>
                   </div>

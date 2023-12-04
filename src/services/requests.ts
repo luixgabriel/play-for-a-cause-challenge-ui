@@ -49,7 +49,12 @@ const getMessagesOfChat = async (chatId: string | null) => {
 
 const userChats = async () => {
   const userId = Cookies.get('userId')
-  const response = await axios.get(`/chat/user-chats/${userId}`)
+  const token = Cookies.get('token')
+  const response = await axios.get(`/chat/user-chats/${userId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
   return response
 }
 
