@@ -19,7 +19,8 @@ import LoadingIcon from '../components/loading-icon'
 const ContainerChat = () => {
   const [receiver, setReceiver] = useState<IUserChats | null>(null)
   const { mutate, isPending } = useCreateChatMutate()
-  const { onlineUsers, userChats, isLoading } = useChat()
+  const { onlineUsers, userChats, isLoading, pendingChat, setPendingChat } =
+    useChat()
   const { user } = useAuth()
   const router = useRouter()
   const token = Cookies.get('token')
@@ -35,12 +36,14 @@ const ContainerChat = () => {
     }
 
     if (chatIsExists) {
+      setPendingChat(null)
       toast.info('Você já tem um chat com esse usuário.')
       return
     }
+    setPendingChat(receiverId)
 
     if (user) {
-      mutate({ userId: user.id, receiverId })
+      await mutate({ userId: user.id, receiverId })
     }
   }
 
@@ -61,7 +64,10 @@ const ContainerChat = () => {
             <div className="p-2 flex flex-col">
               {onlineUsers?.length === 0 ? (
                 <div className="flex items-center justify-center m-2 gap-1">
-                  <span>Nenhum usuário online no momento.</span>
+                  <span className="text-sm">
+                    Nenhum usuário online no momento, abra a aplicação em outro
+                    navegador ou peça pra um amigo abrir em outro dispostivo.
+                  </span>
                 </div>
               ) : (
                 onlineUsers?.map((item: IOnlineUsers) => (
@@ -97,7 +103,9 @@ const ContainerChat = () => {
                         className="hover:text-blue-500"
                         disabled={isPending}
                       >
-                        {isPending ? 'Aguarde...' : 'Iniciar chat'}
+                        {pendingChat === item.user.id
+                          ? 'Aguarde...'
+                          : 'Iniciar chat'}
                       </button>
                     </div>
                   </div>

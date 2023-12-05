@@ -20,6 +20,8 @@ interface IChatContext {
   userChats: IUserChats[] | null
   isLoading: boolean
   messageList: string[]
+  pendingChat: string | null
+  setPendingChat: (value: SetStateAction<string | null>) => void
   setMessageList: (value: SetStateAction<string[]>) => void
 }
 
@@ -34,6 +36,7 @@ export function ChatProvider({ children, user }: ChatContextProps) {
   const queryClient = useQueryClient()
   const [onlineUsers, setOnlineUsers] = useState<any>(null)
   const [messageList, setMessageList] = useState<string[]>([])
+  const [pendingChat, setPendingChat] = useState<string | null>(null)
   const [userChats, setUserChats] = useState<IUserChats[] | null>(null)
   const [socket, setSocket] = useState<Socket | null>(null)
   const { data, isLoading } = useFetchUserChats()
@@ -108,6 +111,8 @@ export function ChatProvider({ children, user }: ChatContextProps) {
         isLoading,
         messageList,
         setMessageList,
+        pendingChat,
+        setPendingChat,
       }}
     >
       {children}
