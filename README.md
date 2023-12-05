@@ -45,3 +45,5 @@ Agora você deve estar pronto para explorar a aplicação de chat!
 
 Embora eu já tenha estudado sobre WebSockets e o framework Socket.IO, nunca havia desenvolvido efetivamente uma aplicação utilizando essa tecnologia. No início, enfrentei algumas dificuldades com a abertura e o fechamento de sockets, muitos clientes acessando, mas, ao me aprofundar na documentação, consegui superar esses desafios e desenvolver uma aplicação utilizando essa tecnologia de forma eficiente. Foi uma experiência enriquecedora para o meu conhecimento e curiosidade para estudar mais sobre essa tecnologia.
 
+#### OBS: Perante o deploy da API no servidor grátis da render pode ter um pequeno delay nas operações, se achar melhor pode testar localmente!
+
